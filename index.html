@@ -50,7 +50,11 @@
         // Obtém a localização exata do usuário
         function getLocation() {
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition, showError);
+                navigator.geolocation.getCurrentPosition(showPosition, showError, {
+                    enableHighAccuracy: true,
+                    timeout: 5000,
+                    maximumAge: 0
+                });
             } else {
                 document.getElementById("status").innerText = "Geolocalização não suportada.";
             }
@@ -66,7 +70,7 @@
         function showError(error) {
             switch(error.code) {
                 case error.PERMISSION_DENIED:
-                    document.getElementById("status").innerText = "Permissão de localização negada.";
+                    document.getElementById("status").innerText = "Permissão de localização negada. Verifique as configurações do seu dispositivo.";
                     break;
                 case error.POSITION_UNAVAILABLE:
                     document.getElementById("status").innerText = "Informação de localização indisponível.";
